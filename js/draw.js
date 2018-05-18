@@ -18,7 +18,7 @@ var drawModule = (function () {
   var scoreText = function() {
     var score_text = "Score: " + score;
     ctx.fillStyle = 'blue';
-    ctx.fillText(score_text, 145, h-5);
+    ctx.fillText(score_text, 285, h-5);
   }
 
   var drawSnake = function() {
@@ -41,15 +41,35 @@ var drawModule = (function () {
       var snakeY = snake[0].y;
 
       if (direction == 'right') { 
-        snakeX++; }
-      else if (direction == 'left') { 
-        snakeX--; }
-      else if (direction == 'up') { 
+        snakeX++;
+        snakeX = snakeX % (w / snakeSize);
+      } else if (direction == 'left') { 
+        snakeX--; 
+        snakeX = (snakeX + w / snakeSize) % (w / snakeSize);
+      } else if (direction == 'up') { 
         snakeY--; 
+        snakeY = (snakeY + h / snakeSize) % (h / snakeSize);
       } else if(direction == 'down') { 
-        snakeY++; }
+        snakeY++; 
+        snakeY = snakeY % (h / snakeSize);
+      }
 
-      if (snakeX == -1 || snakeX == w/snakeSize || snakeY == -1 || snakeY == h/snakeSize || checkCollision(snakeX, snakeY, snake)) {
+      if (snakeX == -1){
+        snake[0].X = (w / snakeSize) - 1;
+      }
+      else if (snakeX == w / snakeSize){
+        snake[0].X == 0
+      }
+
+      if (snakeY == -1){
+        snake[0].Y = (h / snakeSize) - 1;
+      }
+      if (snakeY == h / snakeSize){
+        snake[0].Y == -1
+      }
+
+
+      if (checkCollision(snakeX, snakeY, snake)) {
           //restart game
           btn.removeAttribute('disabled', true);
 
@@ -81,17 +101,18 @@ var drawModule = (function () {
 
   var createFood = function() {
       food = {
-        x: Math.floor((Math.random() * 30) + 1),
-        y: Math.floor((Math.random() * 30) + 1)
+        x: Math.floor((Math.random() * 33) ),
+        y: Math.floor((Math.random() * 33) )
       }
 
-      for (var i=0; i>snake.length; i++) {
+      for (var i=0; i<snake.length; i++) {
         var snakeX = snake[i].x;
         var snakeY = snake[i].y;
       
-        if (food.x===snakeX && food.y === snakeY || food.y === snakeY && food.x===snakeX) {
-          food.x = Math.floor((Math.random() * 30) + 1);
-          food.y = Math.floor((Math.random() * 30) + 1);
+        if (food.y == snakeY && food.x == snakeX) {
+          //food.x = Math.floor((Math.random() * 30) + 1);
+          //food.y = Math.floor((Math.random() * 30) + 1);
+          createFood()
         }
       }
   }
