@@ -8,13 +8,3 @@ document.getElementById("score2").innerHTML = localStorage.getItem('score2');
 document.getElementById("score3").innerHTML = localStorage.getItem('score3');
 document.getElementById("score4").innerHTML = localStorage.getItem('score4');
 document.getElementById("score5").innerHTML = localStorage.getItem('score5');
-
-var addRank = function(rank, name, score) {
-	localStorage.setItem(rank,(name,score));
-}
-
-var replaceRank = function(rank, newname, newscore) {
-	localStorage.setItem(rank,(newname,newscore));
-}
-
-
