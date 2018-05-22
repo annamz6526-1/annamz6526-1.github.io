@@ -1,8 +1,3 @@
-localStorage.setItem('name1','lala');
-localStorage.setItem('name2','gougou');
-localStorage.setItem('score1',100);
-localStorage.setItem('score2',95);
-
 document.getElementById("rank1").innerHTML = localStorage.getItem('name1');
 document.getElementById("rank2").innerHTML = localStorage.getItem('name2');
 document.getElementById("rank3").innerHTML = localStorage.getItem('name3');

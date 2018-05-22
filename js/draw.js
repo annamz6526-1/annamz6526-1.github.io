@@ -18,7 +18,7 @@ var drawModule = (function () {
   var scoreText = function() {
     var score_text = "Score: " + score;
     ctx.fillStyle = 'blue';
-    ctx.fillText(score_text, 285, h-5);
+    ctx.fillText(score_text, 245, h-5);
   }
 
   var drawSnake = function() {
@@ -71,8 +71,8 @@ var drawModule = (function () {
 
       if (checkCollision(snakeX, snakeY, snake)) {
           //restart game
+          compareScore(score);
           btn.removeAttribute('disabled', true);
-
           ctx.clearRect(0,0,w,h);
           gameloop = clearInterval(gameloop);
           return;          
@@ -123,6 +123,39 @@ var drawModule = (function () {
         return true;
       } 
       return false;
+  }
+
+  var askforname = function() {
+    var name = prompt("Please enter your name: ");
+    if (name == null) {name = askforname()};
+    return name;
+  }
+
+  var compareScore = function(score) {
+    var scoreArray = ["score1", "score2", "score3", "score4", "score5"];
+    var nameArray = ["name1", "name2", "name3", "name4", "name5"];
+    var flag = 0;
+    var tmp;
+    var tmpName;
+    for (var i=0; i<scoreArray.length; i++){
+      var value = localStorage.getItem(scoreArray[i]);
+      var valueName = localStorage.getItem(nameArray[i]);
+      if (score >= value && flag == 0){
+        tmpName = valueName;
+        name = askforname();
+        localStorage.setItem(nameArray[i], name);
+        tmp = value;
+        localStorage.setItem(scoreArray[i], score);
+        flag = 1;
+      }
+      else if (flag == 1){
+        if (tmp != null && tmpName != null){
+        localStorage.setItem(scoreArray[i], tmp);
+        localStorage.setItem(nameArray[i], tmpName);
+        }
+        tmp = value;
+      }
+    }
   }
 
   var init = function(){
